@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WDD2425Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="WDD2425Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Sessions" EntityType="WDD2425Model.Sessions" />
+    <EntitySet Name="Speakers" EntityType="WDD2425Model.Speakers" />
+    <EntitySet Name="Timeslots" EntityType="WDD2425Model.Timeslots" />
+    <AssociationSet Name="FK_SessionTimeslot" Association="WDD2425Model.FK_SessionTimeslot">
+      <End Role="Timeslots" EntitySet="Timeslots" />
+      <End Role="Sessions" EntitySet="Sessions" />
+    </AssociationSet>
+    <AssociationSet Name="SpeakerSession" Association="WDD2425Model.SpeakerSession">
+      <End Role="Sessions" EntitySet="Sessions" />
+      <End Role="Speakers" EntitySet="Speakers" />
+    </AssociationSet>
+    <AssociationSet Name="SpeakerSession1" Association="WDD2425Model.SpeakerSession1">
+      <End Role="Sessions" EntitySet="Sessions" />
+      <End Role="Speakers" EntitySet="Speakers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Sessions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Room" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Hash" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Timeslot_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Timeslots" Relationship="WDD2425Model.FK_SessionTimeslot" FromRole="Sessions" ToRole="Timeslots" />
+    <NavigationProperty Name="Speakers" Relationship="WDD2425Model.SpeakerSession" FromRole="Sessions" ToRole="Speakers" />
+    <NavigationProperty Name="Speakers1" Relationship="WDD2425Model.SpeakerSession1" FromRole="Sessions" ToRole="Speakers" />
+  </EntityType>
+  <EntityType Name="Speakers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Sessions" Relationship="WDD2425Model.SpeakerSession" FromRole="Speakers" ToRole="Sessions" />
+    <NavigationProperty Name="Sessions1" Relationship="WDD2425Model.SpeakerSession1" FromRole="Speakers" ToRole="Sessions" />
+  </EntityType>
+  <EntityType Name="Timeslots">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Start" Type="DateTime" />
+    <Property Name="End" Type="DateTime" />
+    <NavigationProperty Name="Sessions" Relationship="WDD2425Model.FK_SessionTimeslot" FromRole="Timeslots" ToRole="Sessions" />
+  </EntityType>
+  <Association Name="FK_SessionTimeslot">
+    <End Role="Timeslots" Type="WDD2425Model.Timeslots" Multiplicity="1" />
+    <End Role="Sessions" Type="WDD2425Model.Sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Timeslots">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sessions">
+        <PropertyRef Name="Timeslot_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SpeakerSession">
+    <End Role="Sessions" Type="WDD2425Model.Sessions" Multiplicity="*" />
+    <End Role="Speakers" Type="WDD2425Model.Speakers" Multiplicity="*" />
+  </Association>
+  <Association Name="SpeakerSession1">
+    <End Role="Sessions" Type="WDD2425Model.Sessions" Multiplicity="*" />
+    <End Role="Speakers" Type="WDD2425Model.Speakers" Multiplicity="*" />
+  </Association>
+</Schema>

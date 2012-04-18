@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RoleModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MvcApplication1" version="1.6.21103.1459" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <Startup>
+    <Task commandLine="DiagnosticsAgent.exe" taskType="background" relativePath="plugins\Diagnostics">
+      <Environment>
+        <Variable name="RdModuleName" value="Diagnostics" />
+        <Variable name="WaRoleType" value="IISWebRole" />
+      </Environment>
+    </Task>
+    <Task commandLine="DiagnosticsAgent.exe /blockStartup" relativePath="plugins\Diagnostics">
+      <Environment>
+        <Variable name="RdModuleName" value="Diagnostics" />
+        <Variable name="WaRoleType" value="IISWebRole" />
+      </Environment>
+    </Task>
+    <Task commandLine="WindowsAzureDiagnosticsStartup.exe Profiling Sampling" executionContext="elevated" relativePath="plugins\Profiling">
+      <Environment>
+        <Variable name="RdModuleName" value="Profiling" />
+        <Variable name="WaRoleType" value="IISWebRole" />
+      </Environment>
+    </Task>
+    <Task commandLine="WindowsAzureDiagnosticsAgent.exe Profiling Sampling" executionContext="elevated" taskType="foreground" relativePath="plugins\Profiling">
+      <Environment>
+        <Variable name="RdModuleName" value="Profiling" />
+        <Variable name="WaRoleType" value="IISWebRole" />
+      </Environment>
+    </Task>
+  </Startup>
+  <Runtime>
+    <Environment>
+      <Variable name="_AZURE_INTELLITRACE_ENABLED_" value="1" />
+      <Variable name="COR_ENABLE_PROFILING" value="1" />
+      <Variable name="VSTS_PROFILER_NOT_CLEAR_ENVVARS" value="1" />
+      <Variable name="COR_PROFILER" value="{F1216318-0905-4fe8-B2E8-105CEB7CD689}" />
+      <Variable name="COR_LINE_PROFILING" value="1" />
+    </Environment>
+    <EntryPoint>
+      <NetFxEntryPoint assemblyName="MvcApplication1.dll" />
+    </EntryPoint>
+  </Runtime>
+  <ConfigurationSettings>
+    <Setting name="ProfilingConnectionString" nameSpace="Profiling" />
+    <Setting name="ConnectionString" nameSpace="Microsoft.WindowsAzure.Plugins.Diagnostics" />
+  </ConfigurationSettings>
+  <Properties>
+    <Property name="RoleType" value="Web" />
+    <Property name="RoleName" value="MvcApplication1" />
+    <Property name="ProjectName" value="MvcApplication1" />
+    <Property name="Configuration" value="Release" />
+    <Property name="Platform" value="AnyCPU" />
+    <Property name="OutputDir" value="C:\Users\shosuz\documents\visual studio 2010\Projects\FastBikeProjects\MvcApplication1\WindowsAzureProject1\obj\Release\MvcApplication1\" />
+    <Property name="EntryPoint" value="MvcApplication1.dll" />
+    <Property name="SourceDir" value="C:\Users\shosuz\documents\visual studio 2010\Projects\FastBikeProjects\MvcApplication1\MvcApplication1\" />
+    <Property name="RoleTargetFramework" value="v4.0" />
+    <Property name="SitePhysicalPath" value="C:\Users\shosuz\documents\visual studio 2010\Projects\FastBikeProjects\MvcApplication1\WindowsAzureProject1\obj\Release\MvcApplication1\" />
+    <Property name="OriginalItemSpec" value="C:\Users\shosuz\documents\visual studio 2010\Projects\FastBikeProjects\MvcApplication1\WindowsAzureProject1\WindowsAzureProject1.ccproj" />
+    <Property name="MSBuildSourceProjectFile" value="C:\Users\shosuz\documents\visual studio 2010\Projects\FastBikeProjects\MvcApplication1\WindowsAzureProject1\WindowsAzureProject1.ccproj" />
+    <Property name="MSBuildSourceTargetName" value="ResolveSingleWebRoleReference" />
+    <Property name="TargetFrameworkVersion" value="v4.0" />
+    <Property name="RolePlugins" value="obj\\Release\Profiling" />
+    <Property name="TargetRuntimeVersion" value="v4.0" />
+  </Properties>
+  <Sites>
+    <Site name="Web" physicalDirectory="C:\Users\shosuz\documents\visual studio 2010\Projects\FastBikeProjects\MvcApplication1\WindowsAzureProject1\obj\Release\MvcApplication1\">
+      <Bindings>
+        <Binding name="Endpoint1" endpointName="Endpoint1" />
+      </Bindings>
+    </Site>
+  </Sites>
+</RoleModel>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  **********************************************************************************************
+
+  このファイルはツールによってプロジェクト ファイルから生成されました: ServiceConfiguration.Cloud.cscfg
+
+  このファイルへの変更は、正しくない動作の原因となる場合があり、ファイルが再生成されると失われます。
+
+  **********************************************************************************************
+-->
+<ServiceConfiguration serviceName="WindowsAzureProject1" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*">
+  <Role name="MvcApplication1">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=wddmobilestorage;AccountKey=LLda+HsCEjq4n6U1tnGwtUcy2QJcK6GsU7xCCFEONw9a6+eONr7FYUJG0IgM1K1h5ISJt8D+FDL5lhFjSBDzgQ==" />
+      <Setting name="Profiling.ProfilingConnectionString" value="BaseEndpoint=core.windows.net;Protocol=https;AccountName=wddmobilestorage;AccountKey=LLda+HsCEjq4n6U1tnGwtUcy2QJcK6GsU7xCCFEONw9a6+eONr7FYUJG0IgM1K1h5ISJt8D+FDL5lhFjSBDzgQ==" />
+      <Setting name="CloudToolsDiagnosticAgentVersion" value="1.6" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

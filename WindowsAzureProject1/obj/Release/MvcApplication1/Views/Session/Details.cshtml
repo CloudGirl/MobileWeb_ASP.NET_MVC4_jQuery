@@ -1,0 +1,50 @@
+﻿@model MvcApplication1.Models.Sessions
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Sessions</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Code)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Code)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Room)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Room)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Hash)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Hash)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Timeslots.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Timeslots.Name)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WDD2425Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="WDD2425ModelStoreContainer">
+    <EntitySet Name="Sessions" EntityType="WDD2425Model.Store.Sessions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Speakers" EntityType="WDD2425Model.Store.Speakers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SpeakerSession" EntityType="WDD2425Model.Store.SpeakerSession" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SpeakerSession1" EntityType="WDD2425Model.Store.SpeakerSession1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Timeslots" EntityType="WDD2425Model.Store.Timeslots" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_SessionTimeslot" Association="WDD2425Model.Store.FK_SessionTimeslot">
+      <End Role="Timeslots" EntitySet="Timeslots" />
+      <End Role="Sessions" EntitySet="Sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SpeakerSession_Session" Association="WDD2425Model.Store.FK_SpeakerSession_Session">
+      <End Role="Sessions" EntitySet="Sessions" />
+      <End Role="SpeakerSession" EntitySet="SpeakerSession" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SpeakerSession_Speaker" Association="WDD2425Model.Store.FK_SpeakerSession_Speaker">
+      <End Role="Speakers" EntitySet="Speakers" />
+      <End Role="SpeakerSession" EntitySet="SpeakerSession" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SpeakerSession1_Session" Association="WDD2425Model.Store.FK_SpeakerSession1_Session">
+      <End Role="Sessions" EntitySet="Sessions" />
+      <End Role="SpeakerSession1" EntitySet="SpeakerSession1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SpeakerSession1_Speaker" Association="WDD2425Model.Store.FK_SpeakerSession1_Speaker">
+      <End Role="Speakers" EntitySet="Speakers" />
+      <End Role="SpeakerSession1" EntitySet="SpeakerSession1" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Sessions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="Room" Type="nvarchar(max)" />
+    <Property Name="Hash" Type="nvarchar(max)" />
+    <Property Name="Timeslot_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Speakers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="SpeakerSession">
+    <Key>
+      <PropertyRef Name="PrimarySpeakers_Id" />
+      <PropertyRef Name="Sessions_Id" />
+    </Key>
+    <Property Name="PrimarySpeakers_Id" Type="int" Nullable="false" />
+    <Property Name="Sessions_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SpeakerSession1">
+    <Key>
+      <PropertyRef Name="AssistantSpeakers_Id" />
+      <PropertyRef Name="SessionsAssistingWith_Id" />
+    </Key>
+    <Property Name="AssistantSpeakers_Id" Type="int" Nullable="false" />
+    <Property Name="SessionsAssistingWith_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Timeslots">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Start" Type="datetime" />
+    <Property Name="End" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_SessionTimeslot">
+    <End Role="Timeslots" Type="WDD2425Model.Store.Timeslots" Multiplicity="1" />
+    <End Role="Sessions" Type="WDD2425Model.Store.Sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Timeslots">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sessions">
+        <PropertyRef Name="Timeslot_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SpeakerSession_Session">
+    <End Role="Sessions" Type="WDD2425Model.Store.Sessions" Multiplicity="1" />
+    <End Role="SpeakerSession" Type="WDD2425Model.Store.SpeakerSession" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sessions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SpeakerSession">
+        <PropertyRef Name="Sessions_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SpeakerSession_Speaker">
+    <End Role="Speakers" Type="WDD2425Model.Store.Speakers" Multiplicity="1" />
+    <End Role="SpeakerSession" Type="WDD2425Model.Store.SpeakerSession" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Speakers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SpeakerSession">
+        <PropertyRef Name="PrimarySpeakers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SpeakerSession1_Session">
+    <End Role="Sessions" Type="WDD2425Model.Store.Sessions" Multiplicity="1" />
+    <End Role="SpeakerSession1" Type="WDD2425Model.Store.SpeakerSession1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sessions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SpeakerSession1">
+        <PropertyRef Name="SessionsAssistingWith_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SpeakerSession1_Speaker">
+    <End Role="Speakers" Type="WDD2425Model.Store.Speakers" Multiplicity="1" />
+    <End Role="SpeakerSession1" Type="WDD2425Model.Store.SpeakerSession1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Speakers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SpeakerSession1">
+        <PropertyRef Name="AssistantSpeakers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

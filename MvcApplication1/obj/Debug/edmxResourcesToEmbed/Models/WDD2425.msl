@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WDD2425ModelStoreContainer" CdmEntityContainer="WDD2425Entities">
+    <EntitySetMapping Name="Sessions">
+      <EntityTypeMapping TypeName="WDD2425Model.Sessions">
+        <MappingFragment StoreEntitySet="Sessions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Room" ColumnName="Room" />
+          <ScalarProperty Name="Hash" ColumnName="Hash" />
+          <ScalarProperty Name="Timeslot_Id" ColumnName="Timeslot_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Speakers">
+      <EntityTypeMapping TypeName="WDD2425Model.Speakers">
+        <MappingFragment StoreEntitySet="Speakers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Timeslots">
+      <EntityTypeMapping TypeName="WDD2425Model.Timeslots">
+        <MappingFragment StoreEntitySet="Timeslots">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="End" ColumnName="End" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="SpeakerSession" TypeName="WDD2425Model.SpeakerSession" StoreEntitySet="SpeakerSession">
+      <EndProperty Name="Sessions">
+        <ScalarProperty Name="Id" ColumnName="Sessions_Id" />
+      </EndProperty>
+      <EndProperty Name="Speakers">
+        <ScalarProperty Name="Id" ColumnName="PrimarySpeakers_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SpeakerSession1" TypeName="WDD2425Model.SpeakerSession1" StoreEntitySet="SpeakerSession1">
+      <EndProperty Name="Sessions">
+        <ScalarProperty Name="Id" ColumnName="SessionsAssistingWith_Id" />
+      </EndProperty>
+      <EndProperty Name="Speakers">
+        <ScalarProperty Name="Id" ColumnName="AssistantSpeakers_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

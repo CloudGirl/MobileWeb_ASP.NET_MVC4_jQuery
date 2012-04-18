@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WDD2425Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="WDD2425ModelStoreContainer">
+          <EntitySet Name="Sessions" EntityType="WDD2425Model.Store.Sessions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Speakers" EntityType="WDD2425Model.Store.Speakers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SpeakerSession" EntityType="WDD2425Model.Store.SpeakerSession" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SpeakerSession1" EntityType="WDD2425Model.Store.SpeakerSession1" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Timeslots" EntityType="WDD2425Model.Store.Timeslots" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_SessionTimeslot" Association="WDD2425Model.Store.FK_SessionTimeslot">
+            <End Role="Timeslots" EntitySet="Timeslots" />
+            <End Role="Sessions" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpeakerSession_Session" Association="WDD2425Model.Store.FK_SpeakerSession_Session">
+            <End Role="Sessions" EntitySet="Sessions" />
+            <End Role="SpeakerSession" EntitySet="SpeakerSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpeakerSession_Speaker" Association="WDD2425Model.Store.FK_SpeakerSession_Speaker">
+            <End Role="Speakers" EntitySet="Speakers" />
+            <End Role="SpeakerSession" EntitySet="SpeakerSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpeakerSession1_Session" Association="WDD2425Model.Store.FK_SpeakerSession1_Session">
+            <End Role="Sessions" EntitySet="Sessions" />
+            <End Role="SpeakerSession1" EntitySet="SpeakerSession1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpeakerSession1_Speaker" Association="WDD2425Model.Store.FK_SpeakerSession1_Speaker">
+            <End Role="Speakers" EntitySet="Speakers" />
+            <End Role="SpeakerSession1" EntitySet="SpeakerSession1" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Sessions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Room" Type="nvarchar(max)" />
+          <Property Name="Hash" Type="nvarchar(max)" />
+          <Property Name="Timeslot_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Speakers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SpeakerSession">
+          <Key>
+            <PropertyRef Name="PrimarySpeakers_Id" />
+            <PropertyRef Name="Sessions_Id" />
+          </Key>
+          <Property Name="PrimarySpeakers_Id" Type="int" Nullable="false" />
+          <Property Name="Sessions_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SpeakerSession1">
+          <Key>
+            <PropertyRef Name="AssistantSpeakers_Id" />
+            <PropertyRef Name="SessionsAssistingWith_Id" />
+          </Key>
+          <Property Name="AssistantSpeakers_Id" Type="int" Nullable="false" />
+          <Property Name="SessionsAssistingWith_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Timeslots">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Start" Type="datetime" />
+          <Property Name="End" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_SessionTimeslot">
+          <End Role="Timeslots" Type="WDD2425Model.Store.Timeslots" Multiplicity="1" />
+          <End Role="Sessions" Type="WDD2425Model.Store.Sessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timeslots">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sessions">
+              <PropertyRef Name="Timeslot_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpeakerSession_Session">
+          <End Role="Sessions" Type="WDD2425Model.Store.Sessions" Multiplicity="1" />
+          <End Role="SpeakerSession" Type="WDD2425Model.Store.SpeakerSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sessions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SpeakerSession">
+              <PropertyRef Name="Sessions_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpeakerSession_Speaker">
+          <End Role="Speakers" Type="WDD2425Model.Store.Speakers" Multiplicity="1" />
+          <End Role="SpeakerSession" Type="WDD2425Model.Store.SpeakerSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Speakers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SpeakerSession">
+              <PropertyRef Name="PrimarySpeakers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpeakerSession1_Session">
+          <End Role="Sessions" Type="WDD2425Model.Store.Sessions" Multiplicity="1" />
+          <End Role="SpeakerSession1" Type="WDD2425Model.Store.SpeakerSession1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sessions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SpeakerSession1">
+              <PropertyRef Name="SessionsAssistingWith_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpeakerSession1_Speaker">
+          <End Role="Speakers" Type="WDD2425Model.Store.Speakers" Multiplicity="1" />
+          <End Role="SpeakerSession1" Type="WDD2425Model.Store.SpeakerSession1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Speakers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SpeakerSession1">
+              <PropertyRef Name="AssistantSpeakers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WDD2425Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="WDD2425Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Sessions" EntityType="WDD2425Model.Sessions" />
+          <EntitySet Name="Speakers" EntityType="WDD2425Model.Speakers" />
+          <EntitySet Name="Timeslots" EntityType="WDD2425Model.Timeslots" />
+          <AssociationSet Name="FK_SessionTimeslot" Association="WDD2425Model.FK_SessionTimeslot">
+            <End Role="Timeslots" EntitySet="Timeslots" />
+            <End Role="Sessions" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="SpeakerSession" Association="WDD2425Model.SpeakerSession">
+            <End Role="Sessions" EntitySet="Sessions" />
+            <End Role="Speakers" EntitySet="Speakers" />
+          </AssociationSet>
+          <AssociationSet Name="SpeakerSession1" Association="WDD2425Model.SpeakerSession1">
+            <End Role="Sessions" EntitySet="Sessions" />
+            <End Role="Speakers" EntitySet="Speakers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Sessions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Room" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Hash" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Timeslot_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Timeslots" Relationship="WDD2425Model.FK_SessionTimeslot" FromRole="Sessions" ToRole="Timeslots" />
+          <NavigationProperty Name="Speakers" Relationship="WDD2425Model.SpeakerSession" FromRole="Sessions" ToRole="Speakers" />
+          <NavigationProperty Name="Speakers1" Relationship="WDD2425Model.SpeakerSession1" FromRole="Sessions" ToRole="Speakers" />
+        </EntityType>
+        <EntityType Name="Speakers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Sessions" Relationship="WDD2425Model.SpeakerSession" FromRole="Speakers" ToRole="Sessions" />
+          <NavigationProperty Name="Sessions1" Relationship="WDD2425Model.SpeakerSession1" FromRole="Speakers" ToRole="Sessions" />
+        </EntityType>
+        <EntityType Name="Timeslots">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Start" Type="DateTime" />
+          <Property Name="End" Type="DateTime" />
+          <NavigationProperty Name="Sessions" Relationship="WDD2425Model.FK_SessionTimeslot" FromRole="Timeslots" ToRole="Sessions" />
+        </EntityType>
+        <Association Name="FK_SessionTimeslot">
+          <End Role="Timeslots" Type="WDD2425Model.Timeslots" Multiplicity="1" />
+          <End Role="Sessions" Type="WDD2425Model.Sessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timeslots">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sessions">
+              <PropertyRef Name="Timeslot_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SpeakerSession">
+          <End Role="Sessions" Type="WDD2425Model.Sessions" Multiplicity="*" />
+          <End Role="Speakers" Type="WDD2425Model.Speakers" Multiplicity="*" />
+        </Association>
+        <Association Name="SpeakerSession1">
+          <End Role="Sessions" Type="WDD2425Model.Sessions" Multiplicity="*" />
+          <End Role="Speakers" Type="WDD2425Model.Speakers" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WDD2425ModelStoreContainer" CdmEntityContainer="WDD2425Entities">
+          <EntitySetMapping Name="Sessions"><EntityTypeMapping TypeName="WDD2425Model.Sessions"><MappingFragment StoreEntitySet="Sessions">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Code" ColumnName="Code" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="Room" ColumnName="Room" />
+            <ScalarProperty Name="Hash" ColumnName="Hash" />
+            <ScalarProperty Name="Timeslot_Id" ColumnName="Timeslot_Id" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Speakers"><EntityTypeMapping TypeName="WDD2425Model.Speakers"><MappingFragment StoreEntitySet="Speakers">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Timeslots"><EntityTypeMapping TypeName="WDD2425Model.Timeslots"><MappingFragment StoreEntitySet="Timeslots">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Start" ColumnName="Start" />
+            <ScalarProperty Name="End" ColumnName="End" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="SpeakerSession" TypeName="WDD2425Model.SpeakerSession" StoreEntitySet="SpeakerSession">
+            <EndProperty Name="Sessions">
+              <ScalarProperty Name="Id" ColumnName="Sessions_Id" />
+            </EndProperty>
+            <EndProperty Name="Speakers">
+              <ScalarProperty Name="Id" ColumnName="PrimarySpeakers_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="SpeakerSession1" TypeName="WDD2425Model.SpeakerSession1" StoreEntitySet="SpeakerSession1">
+            <EndProperty Name="Sessions">
+              <ScalarProperty Name="Id" ColumnName="SessionsAssistingWith_Id" />
+            </EndProperty>
+            <EndProperty Name="Speakers">
+              <ScalarProperty Name="Id" ColumnName="AssistantSpeakers_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="WDD2425">
+        <EntityTypeShape EntityType="WDD2425Model.Sessions" Width="1.5" PointX="3" PointY="1" Height="3.0043749999999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="WDD2425Model.Speakers" Width="1.5" PointX="5.25" PointY="1.5" Height="1.9366666666666657" IsExpanded="true" />
+        <EntityTypeShape EntityType="WDD2425Model.Timeslots" Width="1.5" PointX="0.75" PointY="1.375" Height="2.1502083333333335" IsExpanded="true" />
+        <AssociationConnector Association="WDD2425Model.FK_SessionTimeslot" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.4501041666666667" />
+          <ConnectorPoint PointX="3" PointY="2.4501041666666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="WDD2425Model.SpeakerSession" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="2.4683333333333328" />
+          <ConnectorPoint PointX="5.25" PointY="2.4683333333333328" />
+        </AssociationConnector>
+        <AssociationConnector Association="WDD2425Model.SpeakerSession1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="1.9216666666666664" />
+          <ConnectorPoint PointX="5.25" PointY="1.9216666666666664" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

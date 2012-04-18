@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MvcApplication1.Models.Sessions>
+
+@{
+    ViewBag.Title = "セッション一覧";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <ul data-role="listview" data-theme="c" data-filter="true" data-filter-placeholder="検索">
+    @foreach (var item in Model) {
+        <li>
+            <a href="@Url.Action("Details", new { item.Id })">
+                <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+                <p>Session Code: @Html.DisplayFor(modelItem => item.Code)</p>
+                <p>Room: @Html.DisplayFor(modelItem => item.Room)</p>
+            </a>
+         </li>
+    }
+    </ul>
+</div>
+
+<p>
+    <a href="@Url.Action("Create", "Session")" data-role="button" data-icon="plus">追加</a>
+</p>
